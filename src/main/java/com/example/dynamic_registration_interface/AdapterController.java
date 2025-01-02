@@ -27,7 +27,7 @@ public class AdapterController {
         jsonObject.put("fileName", fileName);
         jsonObject.put("type", type);
         jsonObject.put("isSort", isSort);
-        return "values : " + jsonObject.toJSONString();
+        return jsonObject;
     }
 
     Object myTest4(HttpServletRequest request) {
