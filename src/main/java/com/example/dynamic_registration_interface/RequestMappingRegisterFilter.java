@@ -34,7 +34,7 @@ public class RequestMappingRegisterFilter extends OncePerRequestFilter {
         // 将 requestId 存入 ThreadLocal
         RequestContext.setRequestId(requestId);
         // 在响应头中附加 requestId
-        response.setHeader("requestId", requestId);
+        response.setHeader("Request-Id", requestId);
         String requestUri = request.getRequestURI();
         Set<Map.Entry<RequestMappingInfo, HandlerMethod>> entries = requestMappingHandlerMapping.getHandlerMethods().entrySet();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : entries) {
