@@ -1,6 +1,7 @@
 package com.example.dynamic_registration_interface;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -14,7 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
+@Slf4j
 public class RequestMappingRegisterFilter extends OncePerRequestFilter {
 
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
@@ -26,6 +29,12 @@ public class RequestMappingRegisterFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        // 生成 requestId
+        String requestId = UUID.randomUUID().toString().replaceAll("-", "");
+        // 将 requestId 存入 ThreadLocal
+        RequestContext.setRequestId(requestId);
+        // 在响应头中附加 requestId
+        response.setHeader("requestId", requestId);
         String requestUri = request.getRequestURI();
         Set<Map.Entry<RequestMappingInfo, HandlerMethod>> entries = requestMappingHandlerMapping.getHandlerMethods().entrySet();
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : entries) {
@@ -38,8 +47,10 @@ public class RequestMappingRegisterFilter extends OncePerRequestFilter {
                 }
             }
         }
+        log.error("请求动态接口未注册或者已注销，requestUri:{},requestId:{}", requestUri, requestId);
         PrintWriter writer = response.getWriter();
-        Result<Object> result = Result.failed("接口未注册或者已注销");
+        ApiResult<Object> result = ApiResult.failed("接口未注册或者已注销");
+        result.setRequestId(requestId);
         String jsonStr = JSON.toJSONString(result);
         writer.write(jsonStr);
         writer.flush();
