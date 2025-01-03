@@ -2,6 +2,7 @@ package com.example.dynamic_registration_interface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
@@ -19,19 +20,26 @@ public class RegisterController {
     @Autowired
     private DynamicService dynamicService;
 
-    @Autowired @Qualifier("requestMappingHandlerMapping")
+    @Autowired
+    @Qualifier("requestMappingHandlerMapping")
     private RequestMappingHandlerMapping handlerMapping;
 
-    @GetMapping("/register")
-    public Object register(UserLoginReq userLoginReq) throws NoSuchMethodException {
-        dynamicService.register(userLoginReq);
+    @GetMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Object register(RegisterReq registerReq) throws NoSuchMethodException {
+        dynamicService.register(registerReq);
         return "register success";
     }
 
+//    @GetMapping("/unregister")
+//    public Object unregister(String apiName) throws NoSuchMethodException {
+//        dynamicService.unregister(apiName);
+//        return "unregister [" + apiName + "] success";
+//    }
+
     @GetMapping("/unregister")
-    public Object unregister(String apiName) throws NoSuchMethodException {
-        dynamicService.unregister(apiName);
-        return "unregister [" + apiName + "] success";
+    public Object unregister(RegisterReq registerReq) throws NoSuchMethodException {
+        dynamicService.unregister(registerReq);
+        return "unregister [" + registerReq.getMappingName() + "] success";
     }
 
     @GetMapping("/registeredMethods")

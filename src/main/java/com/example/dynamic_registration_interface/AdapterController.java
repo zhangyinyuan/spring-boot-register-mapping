@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 public class AdapterController {
@@ -47,8 +48,11 @@ public class AdapterController {
         return jsonObj;
     }
 
-
     public Map<String, Object> handleDynamicParams(@RequestParam Map<String, Object> params) {
+        params.put("succe", true);
+        params.put("requstId", UUID.randomUUID().toString().replaceAll("-", ""));
+        params.put("data", new JSONObject());
         return params;
     }
+
 }

@@ -49,6 +49,9 @@ public class RequestMappingRegisterFilter extends OncePerRequestFilter {
         }
         log.error("请求动态接口未注册或者已注销，requestUri:{},requestId:{}", requestUri, requestId);
         PrintWriter writer = response.getWriter();
+        // 设置响应编码和内容类型
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         ApiResult<Object> result = ApiResult.failed("接口未注册或者已注销");
         result.setRequestId(requestId);
         String jsonStr = JSON.toJSONString(result);
