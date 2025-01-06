@@ -30,13 +30,22 @@ public final class GlobalConstants {
             this.requestMethod = requestMethod;
         }
 
-        static RequestMethod requestMethod(String method) {
+        public static RequestMethod requestMethod(String method) {
             for (RequestMethodMapping value : RequestMethodMapping.values()) {
-                if (value.method.equals(method)) {
+                if (value.method.equalsIgnoreCase(method)) {
                     return value.requestMethod;
                 }
             }
             throw new RuntimeException("不支持的请求方法:[" + method + "]");
+        }
+
+        public static boolean isSupported(String method) {
+            for (RequestMethodMapping value : values()) {
+                if (value.method.equalsIgnoreCase(method)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

@@ -48,7 +48,7 @@ public class AdapterController {
         return jsonObj;
     }
 
-    public Map<String, Object> handleDynamicParams(@RequestParam Map<String, Object> params) {
+    public Map<String, Object> handleDynamicParams(@RequestParam(required = false) Map<String, Object> params) {
         params.put("succe", true);
         params.put("requstId", UUID.randomUUID().toString().replaceAll("-", ""));
         params.put("data", new JSONObject());

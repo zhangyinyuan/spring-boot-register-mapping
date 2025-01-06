@@ -11,7 +11,11 @@ public class ApiResult<T> extends Result<T> {
     }
 
     public static <T> ApiResult<T> succeed(T result) {
-        return of(Result.Status.OK, result, (String)null, (String)null);
+        return of(Result.Status.OK, result, (String) null, (String) null);
+    }
+
+    public static <T> ApiResult<T> succeed(Status status, T result, String message) {
+        return of(status, result, message, null);
     }
 
     public static <T> ApiResult<T> failed(T result, String message, String errorCode) {
@@ -74,5 +78,10 @@ public class ApiResult<T> extends Result<T> {
     public ApiResult(Status status, T result, String message, String errorCode) {
         super(status, result, message, errorCode);
     }
+
+
+
+
+
 
 }
