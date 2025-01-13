@@ -1,6 +1,7 @@
 package com.example.dynamic_registration_interface.data.work.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.dynamic_registration_interface.data.work.RequestContext;
 import com.example.dynamic_registration_interface.data.work.result.ApiResult;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         response.setContentType("application/json;charset=UTF-8");
         ApiResult<Object> result = ApiResult.failed("接口未注册或者已注销");
         result.setRequestId(requestId);
-        String jsonStr = JSON.toJSONString(result);
+        String jsonStr = JSON.toJSONString(result, SerializerFeature.WriteMapNullValue);
         writer.write(jsonStr);
         writer.flush();
         writer.close();
