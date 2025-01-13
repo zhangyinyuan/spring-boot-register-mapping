@@ -68,11 +68,11 @@ public class DynamicServiceImpl implements DynamicService {
 //    }
 
     @Override
-    public void register(RegisterReq registerReq) throws NoSuchMethodException {
-        String path = registerReq.getPath();
-        String mappingName = registerReq.getMappingName();
-        String method = registerReq.getMethod();
-        String produce = registerReq.getProduce();
+    public void register(RegisterReqVo registerReqVo) throws NoSuchMethodException {
+        String path = registerReqVo.getPath();
+        String mappingName = registerReqVo.getMappingName();
+        String method = registerReqVo.getMethod();
+        String produce = registerReqVo.getProduce();
         String mappingUrl = DYNAMIC_API_PREFIX + path + PATH_SEPARATOR + mappingName;
         checkParam(path, mappingName, method, produce, mappingUrl);
         List<String> mappingList = ApiManagerUtil.mappingList(handlerMapping);
@@ -81,7 +81,7 @@ public class DynamicServiceImpl implements DynamicService {
         RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(mappingUrl)
                 .produces(produce)
                 .methods(RequestMethodMapping.requestMethod(method.toUpperCase())).build();
-        handlerMapping.registerMapping(requestMappingInfo, "adapterController", AdapterController.class.getDeclaredMethod("handleDynamicParams", Map.class));
+        handlerMapping.registerMapping(requestMappingInfo, "adapterController", AdapterController.class.getDeclaredMethod("handleDynamicAPi", Map.class, Map.class));
     }
 
     private void checkParam(String path, String mappingName, String method, String produce, String mappingUrl) {
@@ -97,11 +97,11 @@ public class DynamicServiceImpl implements DynamicService {
     }
 
     @Override
-    public void unregister(RegisterReq registerReq) {
-        String path = registerReq.getPath();
-        String mappingName = registerReq.getMappingName();
-        String method = registerReq.getMethod();
-        String produce = registerReq.getProduce();
+    public void unregister(RegisterReqVo registerReqVo) {
+        String path = registerReqVo.getPath();
+        String mappingName = registerReqVo.getMappingName();
+        String method = registerReqVo.getMethod();
+        String produce = registerReqVo.getProduce();
         String mappingUrl = DYNAMIC_API_PREFIX + path + PATH_SEPARATOR + mappingName;
         checkParam(path, mappingName, method, produce, mappingUrl);
         RequestMappingHandlerMapping bean = (RequestMappingHandlerMapping) applicationContext.getBean("requestMappingHandlerMapping");

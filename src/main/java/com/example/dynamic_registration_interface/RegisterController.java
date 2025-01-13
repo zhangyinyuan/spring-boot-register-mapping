@@ -20,19 +20,20 @@ public class RegisterController {
     private RequestMappingHandlerMapping handlerMapping;
 
     @GetMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object register(RegisterReq registerReq) throws NoSuchMethodException {
-        dynamicService.register(registerReq);
-        return  ApiResult.succeed(Result.Status.OK, null, "register success");
+    public Object register(RegisterReqVo registerReqVo) throws NoSuchMethodException {
+        dynamicService.register(registerReqVo);
+        return ApiResult.succeed(Result.Status.OK, null, "注册成功");
     }
 
     @GetMapping("/unregister")
-    public Object unregister(RegisterReq registerReq) throws NoSuchMethodException {
-        dynamicService.unregister(registerReq);
-        return ApiResult.succeed(Result.Status.OK, null, "unregister [" + registerReq.getMappingName() + "] success");
+    public Object unregister(RegisterReqVo registerReqVo) throws NoSuchMethodException {
+        dynamicService.unregister(registerReqVo);
+        return ApiResult.succeed(Result.Status.OK, null, "取消注册成功");
     }
 
     @GetMapping("/registeredMethods")
     public List<String> registeredMethods() {
         return ApiManagerUtil.mappingList(handlerMapping);
     }
+
 }

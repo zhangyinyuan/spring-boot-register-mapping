@@ -3,8 +3,12 @@ package com.example.dynamic_registration_interface;
 import lombok.Data;
 import org.springframework.http.MediaType;
 
+import java.io.Serializable;
+
 @Data
-public class RegisterReq {
+public class RegisterReqVo implements Serializable {
+
+    private static final long serialVersionUID = -327565397185943221L;
 
     /**
      * 请求路径前缀
