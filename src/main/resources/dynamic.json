@@ -1,0 +1,31 @@
+[
+  {
+    "path": "/employee/employeeInfo",
+    "params": [
+      {
+        "name": "employeeId",
+        "type": "String",
+        "required": true
+      }
+    ],
+    "mappingName": "",
+    "method": ""
+  },
+  {
+    "path": "/employee/addressInfo",
+    "mappingName": "",
+    "params": [
+      {
+        "name": "employeeId",
+        "type": "String",
+        "required": true
+      },
+      {
+        "name": "addressId",
+        "type": "String",
+        "required": true
+      }
+    ],
+    "method": ""
+  }
+]
