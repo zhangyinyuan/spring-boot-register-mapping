@@ -69,7 +69,7 @@ public class DynamicServiceImpl implements DynamicService {
         RequestMappingHandlerMapping bean = (RequestMappingHandlerMapping) applicationContext.getBean("requestMappingHandlerMapping");
         List<String> mappingList = ApiManagerUtil.mappingList(handlerMapping);
         boolean notExists = mappingList.stream().filter(p -> mappingUrl.equals(p)).count() == 0;
-        if (!notExists) {
+        if (notExists) {
             return;
         }
         RequestMappingInfo requestMappingInfo6 = RequestMappingInfo.paths(mappingUrl)

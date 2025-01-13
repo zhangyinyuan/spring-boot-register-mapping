@@ -22,8 +22,8 @@ public final class GlobalConstants {
      */
     public enum RequestMethodMapping {
         GET("GET", RequestMethod.GET), POST("POST", RequestMethod.POST), PUT("PUT", RequestMethod.PUT), DELETE("DELETE", RequestMethod.DELETE);
-        private String method;
-        private RequestMethod requestMethod;
+        public final String method;
+        public final RequestMethod requestMethod;
 
         RequestMethodMapping(String method, RequestMethod requestMethod) {
             this.method = method;

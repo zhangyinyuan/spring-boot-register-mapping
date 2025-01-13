@@ -3,9 +3,7 @@ package com.example.dynamic_registration_interface.data.work.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.dynamic_registration_interface.data.work.RequestContext;
 import com.example.dynamic_registration_interface.data.work.result.ApiResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
