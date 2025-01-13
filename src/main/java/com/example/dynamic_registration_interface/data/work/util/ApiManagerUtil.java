@@ -1,4 +1,4 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work.util;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class ApiManagerUtil {
 
     /**
-     * 查找已经映射到spring的接口
+     * 查找已经映射到spring的接口(所有的已经注册到Spring的接口,包括原有的接口)
      */
     public static List<String> mappingList(RequestMappingHandlerMapping handlerMapping) {
         List<String> registeredMethods = new LinkedList<>();

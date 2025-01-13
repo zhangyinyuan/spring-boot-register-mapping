@@ -1,5 +1,6 @@
 package com.example.dynamic_registration_interface;
 
+import com.example.dynamic_registration_interface.data.work.result.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

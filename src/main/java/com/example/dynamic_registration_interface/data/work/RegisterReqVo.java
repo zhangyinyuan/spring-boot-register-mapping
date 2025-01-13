@@ -1,4 +1,4 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work;
 
 import lombok.Data;
 import org.springframework.http.MediaType;

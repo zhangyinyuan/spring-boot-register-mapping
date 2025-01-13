@@ -1,9 +1,9 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work.result;
 
 import lombok.Data;
 
 @Data
-public class ApiResult<T> extends Result<T> {
+public class ApiResult<T> extends Result<T> { //FIXME 可以不要这个实体类. 通过过滤器或者拦截器附加信息
     private String requestId;
 
     public static <T> ApiResult<T> of(Status status, T result, String message, String errorCode) {
@@ -78,10 +78,4 @@ public class ApiResult<T> extends Result<T> {
     public ApiResult(Status status, T result, String message, String errorCode) {
         super(status, result, message, errorCode);
     }
-
-
-
-
-
-
 }

@@ -1,5 +1,9 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work.service.impl;
 
+import com.example.dynamic_registration_interface.data.work.RegisterReqVo;
+import com.example.dynamic_registration_interface.data.work.controller.AdapterController;
+import com.example.dynamic_registration_interface.data.work.service.DynamicService;
+import com.example.dynamic_registration_interface.data.work.util.ApiManagerUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.List;
 import java.util.Map;
 
-import static com.example.dynamic_registration_interface.GlobalConstants.*;
+import static com.example.dynamic_registration_interface.data.work.GlobalConstants.*;
 
 @Service
 public class DynamicServiceImpl implements DynamicService {
@@ -25,48 +29,6 @@ public class DynamicServiceImpl implements DynamicService {
     @Qualifier("requestMappingHandlerMapping")
     private RequestMappingHandlerMapping handlerMapping;
 
-//    @Override
-//    public void register(RegisterReq registerReq) throws NoSuchMethodException {
-//        // 无参get方法
-//        RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths("/dynamic/lmcTest").methods(RequestMethod.GET).build();
-//        handlerMapping.registerMapping(requestMappingInfo, "adapterController", AdapterController.class.getDeclaredMethod("myTest"));
-//
-//        // 带一参数的get方法
-//        RequestMappingInfo requestMappingInfo1 = RequestMappingInfo.paths("/dynamic/lmcTest2").params("fileName").methods(RequestMethod.GET).build();
-//        handlerMapping.registerMapping(requestMappingInfo1, "adapterController", AdapterController.class.getDeclaredMethod("myTest2", String.class));
-//
-//        // 带多个参数的get方法
-//        RequestMappingInfo requestMappingInfo2 = RequestMappingInfo.paths("/dynamic/lmcTest3")
-//                .params("fileName", "type", "isSort")
-//                .methods(RequestMethod.GET).build();
-//        handlerMapping.registerMapping(requestMappingInfo2, "adapterController", AdapterController.class.getDeclaredMethod("myTest3", String.class, String.class, Boolean.class));
-//
-//        // 无参post方法
-//        RequestMappingInfo requestMappingInfo3 = RequestMappingInfo.paths("/dynamic/lmcTest4").methods(RequestMethod.POST).build();
-//        handlerMapping.registerMapping(requestMappingInfo3, "adapterController", AdapterController.class.getDeclaredMethod("myTest"));
-//
-//        // 带参post方法
-//        RequestMappingInfo requestMappingInfo4 = RequestMappingInfo.paths("/dynamic/lmcTest5")
-//                .params("fileName", "type", "isSort")
-//                .methods(RequestMethod.POST).build();
-//        handlerMapping.registerMapping(requestMappingInfo4, "adapterController", AdapterController.class.getDeclaredMethod("myTest3", String.class, String.class, Boolean.class));
-//
-//        // body带参的post方法
-//        RequestMappingInfo requestMappingInfo5 = RequestMappingInfo.paths("/dynamic/lmcTest6")
-//                .produces("application/json;charset=UTF-8")
-//                .methods(RequestMethod.POST).build();
-//        handlerMapping.registerMapping(requestMappingInfo5, "adapterController", AdapterController.class.getDeclaredMethod("myTest4", HttpServletRequest.class));
-//
-//        //get请求多个动态参数
-//        RequestMappingInfo requestMappingInfo6 = RequestMappingInfo.paths("/dynamic/lmcTest7")
-//                .produces("application/json;charset=UTF-8")
-//                .methods(RequestMethod.GET).build();
-//        handlerMapping.registerMapping(requestMappingInfo6, "adapterController", AdapterController.class.getDeclaredMethod("handleDynamicParams", Map.class));
-//
-//        // afterPropertiesSet会清空所有非Actuator的静态接口.慎用
-//        // handlerMapping.afterPropertiesSet();
-//    }
-
     @Override
     public void register(RegisterReqVo registerReqVo) throws NoSuchMethodException {
         String path = registerReqVo.getPath();
@@ -77,7 +39,7 @@ public class DynamicServiceImpl implements DynamicService {
         checkParam(path, mappingName, method, produce, mappingUrl);
         List<String> mappingList = ApiManagerUtil.mappingList(handlerMapping);
         boolean notExists = mappingList.stream().filter(p -> mappingUrl.equals(p)).count() == 0;
-        Assert.isTrue(notExists, "接口[" + path + PATH_SEPARATOR + mappingName + "]已注册,请更换url或者先下线");
+        Assert.isTrue(notExists, "接口[" + path + PATH_SEPARATOR + mappingName + "]已注册,请勿重复注册");
         RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(mappingUrl)
                 .produces(produce)
                 .methods(RequestMethodMapping.requestMethod(method.toUpperCase())).build();

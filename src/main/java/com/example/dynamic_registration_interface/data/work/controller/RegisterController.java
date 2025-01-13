@@ -1,5 +1,10 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work.controller;
 
+import com.example.dynamic_registration_interface.data.work.result.ApiResult;
+import com.example.dynamic_registration_interface.data.work.RegisterReqVo;
+import com.example.dynamic_registration_interface.data.work.result.Result;
+import com.example.dynamic_registration_interface.data.work.service.DynamicService;
+import com.example.dynamic_registration_interface.data.work.util.ApiManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;

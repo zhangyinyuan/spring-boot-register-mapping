@@ -1,4 +1,4 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work;
 
 public class RequestContext {
     private static ThreadLocal<String> requestIdHolder = new ThreadLocal<>();

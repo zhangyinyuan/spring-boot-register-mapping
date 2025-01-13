@@ -1,4 +1,4 @@
-package com.example.dynamic_registration_interface;
+package com.example.dynamic_registration_interface.data.work;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
