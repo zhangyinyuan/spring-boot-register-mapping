@@ -1,6 +1,6 @@
 [
   {
-    "path": "/employee/employeeInfo",
+    "path": "/employee",
     "params": [
       {
         "name": "employeeId",
@@ -8,12 +8,12 @@
         "required": true
       }
     ],
-    "mappingName": "",
-    "method": ""
+    "mappingName": "employeeInfo",
+    "method": "get"
   },
   {
-    "path": "/employee/addressInfo",
-    "mappingName": "",
+    "path": "/employee",
+    "mappingName": "addressInfo",
     "params": [
       {
         "name": "employeeId",
@@ -26,6 +26,6 @@
         "required": true
       }
     ],
-    "method": ""
+    "method": "post"
   }
 ]
