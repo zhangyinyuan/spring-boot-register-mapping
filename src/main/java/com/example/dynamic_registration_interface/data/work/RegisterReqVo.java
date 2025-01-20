@@ -11,7 +11,7 @@ public class RegisterReqVo implements Serializable {
     private static final long serialVersionUID = -327565397185943221L;
 
     /**
-     * 请求路径前缀
+     * 请求路径
      */
     String path;
 

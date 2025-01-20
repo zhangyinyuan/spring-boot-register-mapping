@@ -18,6 +18,7 @@ public class DatabaseDrivenInterfaceRegistrar {
 
     @Autowired
     private DynamicService dynamicService;
+
     @Autowired
     private ResourceLoader resourceLoader;
 
