@@ -2,8 +2,10 @@ package com.example.dynamic_registration_interface.data.work.service.impl;
 
 import com.example.dynamic_registration_interface.data.work.RegisterReqVo;
 import com.example.dynamic_registration_interface.data.work.controller.AdapterController;
+import com.example.dynamic_registration_interface.data.work.res.ConditionResVo;
 import com.example.dynamic_registration_interface.data.work.service.DynamicService;
 import com.example.dynamic_registration_interface.data.work.util.ApiManagerUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,6 +22,7 @@ import java.util.Map;
 import static com.example.dynamic_registration_interface.data.work.GlobalConstants.*;
 
 @Service
+@Slf4j
 public class DynamicServiceImpl implements DynamicService {
 
     @Autowired
@@ -37,9 +40,13 @@ public class DynamicServiceImpl implements DynamicService {
         String produce = registerReqVo.getProduce();
         String mappingUrl = DYNAMIC_API_PREFIX + path + PATH_SEPARATOR + mappingName;
         checkParam(path, mappingName, method, produce, mappingUrl);
-        List<String> mappingList = ApiManagerUtil.mappingList(handlerMapping);
-        boolean notExists = mappingList.stream().filter(p -> mappingUrl.equals(p)).count() == 0;
-        Assert.isTrue(notExists, "接口[" + path + PATH_SEPARATOR + mappingName + "]已注册,请勿重复注册");
+        List<ConditionResVo> conditionResVos = ApiManagerUtil.allMappingList(handlerMapping);
+        boolean exists = conditionResVos.stream().filter(p -> p.getPatterns().contains(mappingUrl) && p.getMethods().contains(RequestMethodMapping.requestMethod(method))).count() > 0;
+        if (exists) {
+            //spring 多次动态注册同一个接口,不会报错.但是访问注册的这个接口时会报错(Ambiguous handler methods mapped for). 提示重复注册同一个路径. 所以要在注册前.判断是否已存在这个请求.防止重复注册
+            log.info("接口[" + path + PATH_SEPARATOR + mappingName + "]已注册,请勿重复注册");
+            return;
+        }
         RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(mappingUrl)
                 .produces(produce)
                 .methods(RequestMethodMapping.requestMethod(method.toUpperCase())).build();
